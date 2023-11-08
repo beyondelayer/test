@@ -22,9 +22,23 @@ class UserRepository implements UserRepositoryInterface
 
     }
 
-    public function create(array $data)
+    public function store(array $data, array $detail)
     {
+        $user = new $this->user($data);
+        $user->save();
 
+        if (!$user->id) {
+            return null;
+        }
+
+        $userDetail = new $this->detail($detail);
+        $user->details()->save($userDetail);
+
+        if (!$userDetail->id) {
+            return null;
+        }
+
+        return $user;
     }
 
     public function updateOrFail($id, array $data)
