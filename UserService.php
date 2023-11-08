@@ -21,4 +21,16 @@ class UserService
             ->getAll();
     }
 
+    public function store(array $data, array $detail)
+    {
+        $user = $this->getRepository()
+            ->store($data, $detail);
+
+        if (!$user) {
+            return null;
+        }
+
+        return $user;
+    }
+
 }
